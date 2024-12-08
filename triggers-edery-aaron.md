@@ -1,9 +1,10 @@
 1. Code SQL :
-   BEGIN
-   UPDATE Voitures
-   SET Voitures.disponible = 0
-   WHERE Voitures.id = new.voiture_id;
-   END
+
+BEGIN
+UPDATE Voitures
+SET Voitures.disponible = 0
+WHERE Voitures.id = new.voiture_id;
+END
 
    
 2. Code SQL :
@@ -60,3 +61,21 @@
 
 5. Code SQL : 
 
+BEGIN
+
+SELECT date_debut INTO @debut
+FROM Réservations
+INNER JOIN Voitures ON Réservations.voiture_id = Voitures.id
+WHERE Voitures.id= new.voiture_id;
+
+SELECT date_fin INTO @fin
+FROM Réservations
+INNER JOIN Voitures ON Réservations.voiture_id = Voitures.id
+WHERE Voitures.id = new.voiture_id;
+
+IF new.date_debut BETWEEN @debut AND @fin OR new.date_fin BETWEEN @debut AND @fin THEN
+   SIGNAL SQLSTATE "45000"
+   SET MESSAGE_TEXT = "Vous ne pouvez pas réserver à cette période";
+END IF;
+
+END
