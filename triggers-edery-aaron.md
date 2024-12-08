@@ -1,13 +1,15 @@
 1. Code SQL :
-
+````sql
 BEGIN
 UPDATE Voitures
 SET Voitures.disponible = 0
 WHERE Voitures.id = new.voiture_id;
 END
 
+`````
    
 2. Code SQL :
+````sql
    BEGIN
    SELECT Clients.age INTO @age
    FROM Clients
@@ -19,8 +21,9 @@ END
    END IF;
    
    END
-
+````
 3. Code SQL (triche) :
+````sql
    BEGIN
    IF NEW.permis_conduire IS NULL THEN
    SIGNAL SQLSTATE '45000'
@@ -42,9 +45,10 @@ END
    SET MESSAGE_TEXT = 'Ce numéro de permis de conduire est déjà utilisé par un autre client.';
    END IF;
    END
-
+````
 
 4. Code SQL :
+````sql
    BEGIN
 
    SELECT Voitures.disponible INTO @dispo
@@ -57,10 +61,10 @@ END
    END IF;
    
    END
-
+````
 
 5. Code SQL : 
-
+````sql
 BEGIN
 
 SELECT date_debut INTO @debut
@@ -79,3 +83,4 @@ IF new.date_debut BETWEEN @debut AND @fin OR new.date_fin BETWEEN @debut AND @fi
 END IF;
 
 END
+````
