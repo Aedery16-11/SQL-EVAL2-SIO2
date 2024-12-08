@@ -42,3 +42,17 @@
    END IF;
    END
 
+
+4. Code SQL :
+   BEGIN
+
+   SELECT Voitures.disponible INTO @dispo
+   FROM Voitures
+   WHERE Voitures.id = new.voiture_id;
+   
+   IF @dispo = 0 THEN
+      SIGNAL SQLSTATE "45000"
+      SET MESSAGE_TEXT = "La voiture demandée n'est pas disponible.";
+   END IF;
+   
+   END
